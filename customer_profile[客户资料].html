@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="css/bootstrap.css" />
+		<style>
+			.head{
+				display: inline-block;
+				margin-left: 10px;
+				margin-right: 10px;
+			}
+			.operation li{
+				display: inline-block;
+				list-style: none;
+				margin: 0 20px;
+				font-size: 16px;
+				
+			}
+			.operation{
+				height: 45px;
+				background-color: honeydew;
+			}
+			.inputheight{
+				padding: 0;
+				height: 35px;
+				width: 200px;
+				
+			}
+			select{
+				height: 20px;
+			}
+			#inputinfo tr{
+				height: 50px;
+			}
+			#inputinfo{
+				width: 1100px;
+				margin: 0 auto;
+			}.glyphicon{				
+				font-size: 18px;
+				margin: 0 5px;
+			}.catinput tr{
+				height: 50px;
+			}.catinput{
+				width: auto;
+				margin: 0 auto;
+			}
+			.modal-content td{
+				height:45px;
+				font-size: 16px;
+				padding: 0 8px;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div>
+			<div class="head">
+			<h1>客户资料</h1>
+			</div>
+			<div class="head" style="float: right;margin-top: 30px;">
+				<input type="text" class="form input-lg" placeholder="匹配名称/名称简码/手机/会员卡号/车牌号" style="height: 35px;width: 450px;"/>
+				<button class="btn btn-info">搜索</button>
+				<button class="btn btn-danger">关闭</button>				
+			</div>					
+		</div>
+		<div id="main">
+		<div class="operation">
+			<div style="float: right;">
+				<ul style="margin-top: 10px;">
+					<li class="glyphicon glyphicon-edit" @click="operation_info_1"><a>客户编辑</a></li>
+					<li class="glyphicon glyphicon-list-alt" @click="operation_info_2"><a>车资料</a></li>
+					<li class="glyphicon glyphicon-list" @click="show_modal_3"><a>客户分类</a></li>
+					<li class="glyphicon glyphicon-search" @click="show_modal_4"><a>查询</a></li>
+					<li class="glyphicon glyphicon-open"><a>导出</a></li>
+					<li class="glyphicon glyphicon-cog"><a>字段设置</a></li>			
+				</ul>
+			</div>
+		</div>
+		
+		<div class="operation-info">
+			<div id="operation-info-1">
+				<ul style="margin-top: 10px;width: 800px;display: inline-block;">
+					<li class="glyphicon"><h4>客户编辑</h4></li>
+					<li class="glyphicon"><a @click="show_modal_6()">增加客户和车</a></li>
+					<li class="glyphicon"><a @click="show_modal_1()">增加客户</a></li>
+					<li class="glyphicon"><a @click="show_modal_1()">修改客户</a></li>
+					<li class="glyphicon"><a>删除客户</a></li>
+					<li class="glyphicon"><a>相关证照</a></li>
+					<li class="glyphicon"><a @click="show_modal_5()">设置密码</a></li>	
+				</ul>
+				<a style="float: right;display: inline-block;margin-top: 25px;margin-right: 100px;" @click="hide_operation_info_1">收起</a>
+				
+			</div>
+			<div id="operation-info-2">
+				<ul style="margin-top: 10px;width: 800px;display: inline-block;">
+					<li class="glyphicon"><h4>车资料</h4></li>
+					<li class="glyphicon"><a @click="show_modal_2()">添加车资料</a></li>
+					<li class="glyphicon"><a @click="show_modal_2()">修改车资料</a></li>
+					<li class="glyphicon"><a>删除车资料</a></li>
+				</ul>
+				<a style="float: right;display: inline-block;margin-top: 25px;margin-right: 100px;" @click="hide_operation_info_2">收起</a>
+			</div>
+		</div>
+		<div style="border-radius:5px;border:1px solidred;padding:10px;min-height:250px;overflow-y:scroll;max-width:1600px;">
+			<table class="table table-bordered" style="margin-top: 20px;width: 2500px;">
+				<thead>
+						<tr style="background-color: #1B6D85;color: white;">
+							<th>全选<input type="checkbox"></th>
+							<th>客户编码</th>
+							<th>客户名称</th>
+							<th>详细地址</th>
+							<th>联系人</th>
+							<th>手机</th>
+							<th>客户生日</th>
+							<th>客户类别</th>
+							<th>会员卡号</th>
+							<th>入会日期</th>
+							<th>会员到期</th>
+							<th>备注</th>
+							<th>建档日期</th>
+							<th>服务顾问</th>
+							<th>业务员电话</th>
+							<th>账期</th>
+							<th>挂账额度</th>
+							<th>累计积分</th>
+							<th>定金余额</th>
+							<th>客户省</th>
+							<th>客户市</th>
+							<th>客户区</th>
+							<th>纳税人识别号</th>
+							<th>注册电话</th>
+							<th>开户银行</th>
+							<th>银行账户</th>
+							<th>注册地址</th>
+							<th>其他一</th>
+							<th>其他二</th>
+							<th>其他三</th>
+							<th>其他四</th>
+						</tr>
+					</thead>
+					<tr>
+						<th><input type="checkbox"></th>
+						<th>客户编码</th>
+						<th>客户名称</th>
+						<th>详细地址</th>
+						<th>联系人</th>
+						<th>手机</th>
+						<th>客户生日</th>
+						<th>客户类别</th>
+						<th>会员卡号</th>
+						<th>入会日期</th>
+						<th>会员到期</th>
+						<th>备注</th>
+						<th>建档日期</th>
+						<th>服务顾问</th>
+						<th>业务员电话</th>
+						<th>账期</th>
+						<th>挂账额度</th>
+						<th>累计积分</th>
+						<th>定金余额</th>
+						<th>客户省</th>
+						<th>客户市</th>
+						<th>客户区</th>
+						<th>纳税人识别号</th>
+						<th>注册电话</th>
+						<th>开户银行</th>
+						<th>银行账户</th>
+						<th>注册地址</th>
+						<th>其他一</th>
+						<th>其他二</th>
+						<th>其他三</th>
+						<th>其他四</th>
+					</tr>
+			</table>
+		</div>
+		<div class="db">
+			 <ul class="nav nav-tabs" role="tablist">
+			    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">车辆信息</a></li>
+			    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">历史消费</a></li>
+			    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">历史回访</a></li>
+			 </ul>
+			  
+			  <div class="tab-content">
+			      <div role="tabpanel" class="tab-pane active" id="home" style="border-radius:5px;border:1px solidred;padding:10px;min-height:250px;overflow-y:scroll;max-width:1600px;">
+					  <table class="table table-bordered" style="margin-top: 20px;width: 2500px;">
+						  <thead>
+							<tr style="background-color: #1B6D85;color: white;">
+								<th>全选<input type="checkbox"></th>
+								<th>车牌号码</th>
+								<th>车辆品牌</th>
+								<th>车辆型号</th>
+								<th>驾驶员</th>
+								<th>车牌号</th>
+								<th>驾驶员电话</th>
+								<th>出生日期</th>
+								<th>车辆归属</th>
+								<th>驾证到期</th>
+								<th>车架号</th>
+								<th>发动机号</th>
+								<th>发动机品牌号</th>
+								<th>车辆年款</th>
+								<th>里程</th>
+								<th>载重</th>
+								<th>车系</th>
+								<th>购买日期</th>
+								<th>上牌日期</th>
+								<th>年检到期</th>
+								<th>交强险保险公司</th>
+								<th>交强险到期</th>
+								<th>商业险保险公司</th>
+								<th>商业险到期</th>
+								<th>在我投保车</th>
+								<th>燃油类别</th>
+								<th>下次保养里程</th>
+								<th>下次保养日期</th>
+							</tr>
+						</thead>
+							<tr>
+								<th><input type="checkbox"></th>
+								<th>车牌号码</th>
+								<th>车辆品牌</th>
+								<th>车辆型号</th>
+								<th>驾驶员</th>
+								<th>车牌号</th>
+								<th>驾驶员电话</th>
+								<th>出生日期</th>
+								<th>车辆归属</th>
+								<th>驾证到期</th>
+								<th>车架号</th>
+								<th>发动机号</th>
+								<th>发动机品牌号</th>
+								<th>车辆年款</th>
+								<th>里程</th>
+								<th>载重</th>
+								<th>车系</th>
+								<th>购买日期</th>
+								<th>上牌日期</th>
+								<th>年检到期</th>
+								<th>交强险保险公司</th>
+								<th>交强险到期</th>
+								<th>商业险保险公司</th>
+								<th>商业险到期</th>
+								<th>在我投保车</th>
+								<th>燃油类别</th>
+								<th>下次保养里程</th>
+								<th>下次保养日期</th>
+							</tr>
+					  </table>
+				  </div>
+			      <div role="tabpanel" class="tab-pane" id="profile">
+					  <table class="table table-bordered" style="margin-top: 20px;">
+					  	<tr style="background-color: #1B6D85;color: white;">
+					  		<th>单据类型</th>
+					  		<th>销售单号</th>
+					  		<th>车牌号</th>
+							<th>维修业务</th>
+					  		<th>进厂时间</th>
+					  		<th>完工时间</th>
+					  		<th>结算时间</th>
+					  		<th>消费时间</th>
+					  	</tr>
+					  	<tr>
+					  		<th>001</th>
+					  		<th>北极熊</th>
+					  		<th>2</th>
+					  		<th>测试</th>
+					  		<th>11111111111</th>
+					  		<th>25260505</th>
+					  		<th>株洲县茶陵县</th>
+					  		<th>2020001</th>
+					  	</tr>
+					  </table>
+				  </div>
+			      <div role="tabpanel" class="tab-pane" id="messages">
+					  <table class="table table-bordered" style="margin-top: 20px;">
+					  	<tr style="background-color: #1B6D85;color: white;">
+					  		<th>回访时间</th>
+					  		<th>客户编码</th>
+					  		<th>客户名称</th>
+							<th>地址</th>
+					  		<th>车牌号</th>
+					  		<th>联系电话</th>
+					  		<th>回访效果</th>
+					  		<th>服务顾问</th>
+					  		<th>详细说明</th>
+					  		<th>开单人</th>
+					  	</tr>
+					  	<tr>
+					  		<th>001</th>
+					  		<th>北极熊</th>
+					  		<th>2</th>
+					  		<th>测试</th>
+					  		<th>11111111111</th>
+					  		<th>25260505</th>
+					  		<th>株洲县茶陵县</th>
+					  		<th>2020001</th>
+					  		<th>入会日期</th>
+					  		<th>会员到期</th>
+					  	</tr>
+					  </table>
+					  
+				  </div>
+			    </div>
+		</div>
+		<div id="modal-1" class="modal fade" tabindex="-1" role="dialog" >
+		  <div class="modal-dialog" role="document" style="width: 1400px;">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button class="btn btn-primary" style="float: right;margin-right: 20px;">保存</button>
+		        <h4 class="modal-title">客户资料编辑</h4>
+		      </div>
+			  <div style="width: auto;margin: 0 auto;margin-left: 20px;margin-right: 20px;">
+					<table>
+						<tr>
+							<td>客户编号：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>客户名称：</td>
+							<td></td?><input type="text" class="form input-lg inputheight"></td>
+							<td>联系人：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>手机：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>客户地址：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>客户生日：</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>账期（天）：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>挂账额度：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>专属顾问：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>顾问电话：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>省</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>								
+							</td>
+							<td>市</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>
+							</td>
+							<td>区</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>备注：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>纳税人识别号：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>注册电话：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>开户银行：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+							<td>开户银行：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>注册地址：</td>
+							<td><input type="text"  class="form input-lg inputheight"></td>
+						<tr>
+							<td>其他一：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>其他二：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>其他三：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>其他四：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+					</table>
+				</div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		
+		
+		
+		
+		<div id="modal-2" class="modal fade" tabindex="-1" role="dialog" >
+		  <div class="modal-dialog" role="document" style="width: 1400px;">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button class="btn btn-primary" style="float: right;margin-right: 20px;">保存</button>
+		        <h4 class="modal-title">车辆资料编辑</h4>
+		      </div>
+			  <div style="width: auto;margin: 0 auto;margin-left: 20px;margin-right: 20px;">
+					<table>
+						<tr>
+							<td>车牌号码</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>车辆品牌</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>
+							</td>
+							<td>车辆型号</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>驾驶员</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>驾驶员电话</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>出生日期</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+							<td>车辆归属</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>
+							</td>
+							<td>驾证到期</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>车架号</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>发动机号</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>车辆年款</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>里程</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>发动机品牌</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>
+							</td>
+							<td>载重</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>购买日期</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>上牌日期</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+							<td>车检到期</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>燃油类别</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>
+							</td>
+							<td>车系</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>交强险保险公司</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>
+							</td>
+							<td>交强险到期</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+							<td>在我投保车</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>商业保险公司</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>
+							</td>
+							<td>商业险到期</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>下次保养里程</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>下次保养日期</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+							<td>客户名称</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+					</table>
+				</div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		
+		
+		<div id="modal-3" class="modal fade" tabindex="-1" role="dialog" >
+		  <div class="modal-dialog" role="document" style="width: 1200px;">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button class="btn btn-primary" style="float: right;margin-right: 20px;">保存</button>
+		        <h4 class="modal-title">客户分类</h4>
+		      </div>
+			  <div style="width: auto;margin: 0 auto;margin-left: 20px;margin-right: 20px;">
+				 <div>
+				 	<ul style="margin-top: 10px;float: right;">
+				 		<li class="glyphicon glyphicon-edit"><a>增加</a></li>
+				 		<li class="glyphicon glyphicon-remove"><a>删除</a></li>
+				 		<li class="glyphicon glyphicon-plus"><a>保存</a></li>		
+				 	</ul>
+				 </div>
+				 <div>
+					<table style="margin: 0 auto;">
+						<tr>
+							<td>分类代码</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>客户类别</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>价格类型</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>有效期(年)</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>会费</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>类别</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+					</table>
+					<table class="table table-bordered" style="margin: 0 auto;">
+						<thead>
+							<tr>
+								<td>分类编码</td>
+								<td>客户类别</td>
+								<td>价格类别</td>
+								<td>有效期(年)</td>
+								<td>会费(元)</td>
+								<td>类别</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>分类编码</td>
+								<td>客户类别</td>
+								<td>价格类别</td>
+								<td>有效期(年)</td>
+								<td>会费(元)</td>
+								<td>类别</td>
+							</tr>
+						</thead>
+					</table>
+					</div>
+				</div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		
+		
+		
+		<div id="modal-4" class="modal fade" tabindex="-1" role="dialog" >
+		  <div class="modal-dialog" role="document" style="width: 1200px;">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button class="btn btn-primary" style="float: right;margin-right: 20px;">确定</button>
+		        <h4 class="modal-title">客户查询</h4>
+		      </div>
+			  <div style="width: auto;margin: 0 auto;margin-left: 20px;margin-right: 20px;padding-bottom: 15px;">
+					<table>
+						<tr>
+							<td>客户编码</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>客户名称</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>客户类别</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>上牌日期</option>
+									<option>交强险日期</option>
+									<option>商业险日期</option>
+									<option>车检日期</option>
+								</select>
+						</td>
+						</tr>
+						<tr>
+							<td>联系人</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>手机号码</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>客户地址</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>备注</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>会员卡号</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>客户生日</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+							<td>在我投保车<input type="checkbox"></td>
+						</tr>
+						<tr>
+							<td>超过x月没自修</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>专属顾问</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option></option>
+								</select>
+							</td>
+							<td>顾问电话</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>省</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>								
+							</td>
+							<td>市</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>
+							</td>
+							<td>区</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>车牌号码</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>车辆品牌</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>车辆型号</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>车架号</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>发动机号</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>保险公司</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>发动机品牌</td>
+							<td>
+								<select class="form-control" style="width: 160px;display: inline-block;">
+									<option></option>
+								</select>
+							</td>
+							<td>驾驶员</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>驾驶员电话</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+					</table>
+					<div>
+						<select class="form-control" style="width: 160px;display: inline-block;">
+							<option>开户日期</option>
+							<option>入会日期</option>
+							<option>会员到期</option>
+							<option>购买日期</option>
+							<option>上牌日期</option>
+							<option>交强险到期</option>
+							<option>商业险到期</option>
+							<option>车检日期</option>
+						</select>
+						<input type="date" class="form input-lg inputheight"/>
+						<input type="date" class="form input-lg inputheight"/>
+						<select class="form-control" style="width: 160px;display: inline-block;">
+							<option>上牌日期</option>
+							<option>交强险日期</option>
+							<option>商业险日期</option>
+							<option>车检日期</option>
+						</select>
+						<select class="form-control" style="width: 160px;display: inline-block;">
+							<option>所有</option>
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+							<option>6</option>
+							<option>7</option>
+							<option>8</option>
+							<option>9</option>
+							<option>10</option>
+							<option>11</option>
+							<option>12</option>
+						</select>
+						<input type="text" style="width: 100px;" class="form input-lg inputheight"/>
+						<input type="text" style="width: 100px;" class="form input-lg inputheight"/>
+					</div>
+					<div>
+						订单金额<input type="text" style="width: 100px;" class="form input-lg inputheight"/>
+						至<input type="text" style="width: 100px;" class="form input-lg inputheight"/>
+						储值卡余额<input type="text" style="width: 100px;" class="form input-lg inputheight"/>
+						至<input type="text" style="width: 100px;" class="form input-lg inputheight"/>
+						积分<input type="text" style="width: 100px;" class="form input-lg inputheight"/>
+						至<input type="text" style="width: 100px;" class="form input-lg inputheight"/>
+					</div>
+				</div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		
+		
+		
+		<div id="modal-5" class="modal fade" tabindex="-1" role="dialog" >
+		  <div class="modal-dialog" role="document" style="width: 500px;">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button class="btn btn-primary" style="float: right;margin-right: 20px;">确定	</button>
+		        <h4 class="modal-title">修改口令</h4>
+		      </div>
+			  <div style="width: auto;margin: 0 auto;margin-left: 20px;margin-right: 20px;">
+					<table>
+						<tr>
+							<td>会员卡号：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>客户消费密码：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>重新确认：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+					</table>
+				</div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		
+		
+		
+		<div id="modal-6" class="modal fade" tabindex="-1" role="dialog" >
+		  <div class="modal-dialog" role="document" style="width: 1400px;">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button class="btn btn-primary" style="float: right;margin-right: 20px;">确定	</button>
+		        <h4 class="modal-title">员工查询</h4>
+		      </div>
+			  <div style="width: auto;margin: 0 auto;margin-left: 20px;margin-right: 20px;">
+					<table>
+						<tr>
+							<td>客户编号：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>客户名称：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>联系人：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>手机号码：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>							
+						</tr>
+						<tr>
+							<td>客户地址：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>客户生日：</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>账期(天)：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>挂账额度：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>专属顾问：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>顾问电话：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							
+						</tr>
+						<tr>
+							<td>省</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>								
+							</td>
+							<td>市</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>
+							</td>
+							<td>区</td>
+							<td>
+								<select class="form-control" style="width: 200px;display: inline-block;">
+									<option>XX</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>备注：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>车牌号码：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>车辆品牌：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>车辆型号：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>驾驶员：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>驾驶员电话：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>出生日期：</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+							<td>车辆归属：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>驾证到期：</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+							
+						</tr>
+						<tr>
+							<td>车架号：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>发动机号：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>车辆年款：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>里程：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							
+						</tr>
+						<tr>
+							<td>发动机品牌：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>载重：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>购买日期：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>
+							<td>上牌日期：</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+							<td>车检到期：</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+							<td>燃油类别：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>在我投保车：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>	
+						</tr>
+						<tr>
+							<td>交强险保险公司：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>交强险到期：</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+						</tr>
+						<tr>						
+							<td>商业保险公司：</td>
+							<td><input type="text" class="form input-lg inputheight"></td>
+							<td>商业险到期：</td>
+							<td><input type="date" class="form input-lg inputheight"></td>
+						</tr>
+					</table>
+				</div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		</div>
+		<script type="text/javascript " src="js/jquery-1.12.4.js "></script>
+		<script type="text/javascript " src="js/bootstrap.min.js "></script>
+		<script type="text/javascript " src="js/vue.js "></script>
+		<script type="text/javascript">
+			$(".operation-info div").hide();
+			$("#khfl").click(function(){
+				$("#modal-3").show();
+			})
+			$(".modal").modal("hide");
+			
+			$('#myTabs a').click(function (e) {
+			  e.preventDefault()
+			  $(this).tab('show')
+			})
+			$('#myTabs a[href="#profile"]').tab('show') // Select tab by name
+			$('#myTabs a:first').tab('show') // Select first tab
+			$('#myTabs a:last').tab('show') // Select last tab
+			$('#myTabs li:eq(2) a').tab('show') // Select third tab (0-indexed)
+			
+			var vm = new Vue({
+				el:"#main",
+				methods:{
+						show_modal_1(i){		//传零或一 判断添加和修改用
+							$("#modal-1").modal("show");
+						},
+						show_modal_2(i){		//传零或一 判断添加和修改用
+							$("#modal-2").modal("show");
+						},
+						show_modal_3(i){		//传零或一 判断添加和修改用
+							$("#modal-3").modal("show");
+						},
+						show_modal_4(i){		//传零或一 判断添加和修改用
+							$("#modal-4").modal("show");
+						},
+						show_modal_5(i){		//传零或一 判断添加和修改用
+							$("#modal-5").modal("show");
+						},
+						show_modal_6(i){		//传零或一 判断添加和修改用
+							$("#modal-6").modal("show");
+						},
+						operation_info_1(){
+							$("#operation-info-1").show();
+						},
+						operation_info_2(){
+							$("#operation-info-2").show();
+						},
+						hide_operation_info_1(){
+							$("#operation-info-1").hide();
+						},
+						hide_operation_info_2(){
+							$("#operation-info-2").hide();
+						},
+						
+					
+					
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+			})
+		</script>
+	</body>
+</html>
